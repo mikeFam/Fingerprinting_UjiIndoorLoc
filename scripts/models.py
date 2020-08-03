@@ -11,7 +11,7 @@ def load_KNN(k_value):
     
     Returns    : model_name : (str) Name of the model for output file.
                        clf  : (Classifier) Building and Floor Classifier
-                       regr : (REgressor) Longitude and Latitude Regressor
+                       regr : (Regressor) Longitude and Latitude Regressor
     '''
     model_name = "K-Nearest Neighbors"
 
