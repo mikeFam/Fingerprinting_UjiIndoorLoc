@@ -116,7 +116,9 @@ if __name__ == "__main__":
     ################## INSERT MODEL AND MODEL NAME HERE #######################
     
     # # K-Nearest Neighbors with Variance Thresholding
-    # model_name, clf, regr = load_KNN()
+    model_name, clf, regr = load_KNN()
+
+    print (model_name)
     # x_train, x_test = threshold_variance(x_train_o, x_test_o, thresh=0.00001)
     # print (x_test.shape)
     # data_in =  (x_train, x_test, y_train, y_test)
