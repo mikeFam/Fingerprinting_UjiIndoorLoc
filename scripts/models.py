@@ -9,7 +9,7 @@ from sklearn.multioutput import MultiOutputRegressor, MultiOutputClassifier
 from sklearn.feature_selection import VarianceThreshold
 
 
-def load_KNN():
+def load_KNN(k):
     '''
     Loads K-Nearest Neighbor and gives a name for the output files.
     
@@ -20,9 +20,9 @@ def load_KNN():
                        regr : (REgressor) Longitude and Latitude Regressor
     '''
     model_name = "K-Nearest Neighbors"
-    clf = KNeighborsClassifier(n_neighbors=1, algorithm='kd_tree',
+    clf = KNeighborsClassifier(n_neighbors=k, algorithm='kd_tree',
                                 leaf_size=50, p=1)
-    regr = KNeighborsRegressor(n_neighbors=1, algorithm='kd_tree',
+    regr = KNeighborsRegressor(n_neighbors=k, algorithm='kd_tree',
                                 leaf_size=50, p=1)
     
     return model_name, clf, regr
