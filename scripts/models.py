@@ -1,15 +1,9 @@
 
 # Libraries
 from sklearn.neighbors import KNeighborsRegressor, KNeighborsClassifier
-from sklearn.svm import SVR, SVC
-from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
-from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
-from sklearn.decomposition import PCA
-from sklearn.multioutput import MultiOutputRegressor, MultiOutputClassifier
-from sklearn.feature_selection import VarianceThreshold
 
 
-def load_KNN(k):
+def load_KNN(k_value):
     '''
     Loads K-Nearest Neighbor and gives a name for the output files.
     
@@ -17,12 +11,12 @@ def load_KNN(k):
     
     Returns    : model_name : (str) Name of the model for output file.
                        clf  : (Classifier) Building and Floor Classifier
-                       regr : (REgressor) Longitude and Latitude Regressor
+                       regr : (Regressor) Longitude and Latitude Regressor
     '''
     model_name = "K-Nearest Neighbors"
-    clf = KNeighborsClassifier(n_neighbors=k, algorithm='kd_tree',
-                                leaf_size=50, p=1)
-    regr = KNeighborsRegressor(n_neighbors=k, algorithm='kd_tree',
-                                leaf_size=50, p=1)
+
+    # clf = KNeighborsClassifier(n_neighbors = k_value, algorithm = 'kd_tree', leaf_size = 50, p = 1)
+    reg = KNeighborsRegressor(n_neighbors = k_value, algorithm = 'kd_tree', leaf_size = 50, p = 1)
+
+    return model_name, reg # , clf
     
-    return model_name, clf, regr
