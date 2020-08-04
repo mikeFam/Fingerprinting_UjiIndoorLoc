@@ -131,3 +131,5 @@ if __name__ == "__main__":
     data_in = (x_train, x_test, y_train, y_test)
     lr_errors, lr_prediction = run_model(model_name, regr, data_in)
 
+    toc = time() # Report program performance timer
+    print("Program Timer: %.2f seconds" % (toc-tic))
