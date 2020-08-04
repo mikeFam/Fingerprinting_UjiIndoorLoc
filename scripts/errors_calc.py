@@ -66,6 +66,6 @@ def compute_errors(prediction, truth, building_penalty=BP, floor_penalty=FP):
     errors = (coords_error, standard_error, coords_error_prob)
 
 
-    print(errors)
+    # print(errors)
                          
     return errors
