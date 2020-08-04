@@ -63,15 +63,15 @@ def run_model(model_name, regr, data):
     totals_report = create_subreport(errors, y_test.shape[0])
     print(totals_report)
     
-    # toc_model = time()
-    # model_timer = toc_model - tic_model
-    # print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
+    toc_model = time()
+    model_timer = toc_model - tic_model
+    print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
     
-    # # Create the output txt file of the entire report. Save if boolean permits.
-    # header = "%s\nModel Timer: %.2f seconds" % (model_name, model_timer)
-    # report = "\n\n".join([header, totals_report])
-    # if SAVE_REPORT:
-    #     save_report(model_name, report, "totals")
+    # Create the output txt file of the entire report. Save if boolean permits.
+    header = "%s\nModel Timer: %.2f seconds" % (model_name, model_timer)
+    report = "\n\n".join([header, totals_report])
+    if SAVE_REPORT:
+        save_report(model_name, report, "totals")
     
     return errors, prediction
 
