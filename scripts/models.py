@@ -8,6 +8,8 @@ from sklearn.decomposition import PCA
 from sklearn.multioutput import MultiOutputRegressor, MultiOutputClassifier
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Lars
+from sklearn.linear_model import LassoLars
 
 
 
@@ -34,7 +36,6 @@ def load_Random_Forest():
     Parameters : None
     
     Returns    : model_name : (str) Name of the model for output file.
-                       clf  : (Classifier) Building and Floor Classifier
                        regr : (REgressor) Longitude and Latitude Regressor
     '''   
     model_name = "Random Forest Regressor"
@@ -49,14 +50,41 @@ def load_Linear_Regression ():
     Parameters : None
     
     Returns    : model_name : (str) Name of the model for output file.
-                       clf  : (Classifier) Building and Floor Classifier
                        regr : (REgressor) Longitude and Latitude Regressor
     '''
     model_name = "Linear Regressor"
     regr = LinearRegression()
 
+    return model_name, regr
+
+def load_Least_Angle_Regression ():
+    '''
+    Load Least Angle Regression and gives a name for the output files.
+    
+    Parameters : None
+    
+    Returns    : model_name : (str) Name of the model for output file.
+                       regr : (REgressor) Longitude and Latitude Regressor
+    '''
+    model_name = "Least Angle Regression"
+    regr = Lars()
 
     return model_name, regr
+
+def load_Lasso_Least_Angle_Regression ():
+    '''
+    Load Lasso Least Angle Regression and gives a name for the output files.
+    
+    Parameters : None
+    
+    Returns    : model_name : (str) Name of the model for output file.
+                       regr : (REgressor) Longitude and Latitude Regressor
+    '''
+    model_name = "Lasso Least Angle Regression"
+    regr = LassoLars()
+
+    return model_name, regr
+
 
 
 def threshold_variance(x_train, x_test, thresh):
