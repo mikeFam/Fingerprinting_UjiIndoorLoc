@@ -7,6 +7,7 @@ from scripts.models import (load_KNN, load_Random_Forest, load_Linear_Regression
 # Libraries
 from time import time
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score, mean_squared_error
 from matplotlib.pyplot import close, ioff, ion
 from pandas import DataFrame, concat
 
@@ -56,6 +57,10 @@ def run_model(model_name, regr, data):
     # prediction = concat((clf_prediction, regr_prediction), axis=1)
     
     errors = compute_errors(regr_prediction, y_test)
+    r2 = r2_score(y_test[QUANTITATIVE_COLUMNS], regr_prediction)
+    mean = mean_squared_error(y_test[QUANTITATIVE_COLUMNS], regr_prediction)
+    print("%.3f\n" % (r2))
+    print("%.3f\n" % (mean))
 
     # # print (errors) # test
     
