@@ -116,7 +116,7 @@ if __name__ == "__main__":
     # K-Nearest Neighbors with Variance Thresholding
     model_name, clf, regr = load_KNN(k)
     x_train, x_test = threshold_variance(x_train_o, x_test_o, thresh=0.00001)
-    print (x_test.shape)
+    # print (x_test.shape)
     data_in =  (x_train, x_test, y_train, y_test)
     knn_errors, knn_prediction = run_model(model_name, regr, data_in)
 
