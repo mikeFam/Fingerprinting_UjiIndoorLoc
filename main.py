@@ -2,7 +2,7 @@
 from scripts.utils import (load_data, filter_out_low_WAPS)
 from scripts.errors_calc import (compute_errors)
 # from scripts.plots import plot_pos_vs_time, plot_lat_vs_lon
-from scripts.models import (load_KNN, threshold_variance)
+from scripts.models import (load_KNN, threshold_variance, load_Random_Forest, pca)
 
 # Libraries
 from time import time
