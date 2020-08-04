@@ -127,3 +127,5 @@ if __name__ == "__main__":
     x_train, x_test = pca(x_train_o, x_test_o, perc_of_var=0.95)
     data_in =  (x_train, x_test, y_train, y_test)
     rf_errors, rf_prediction = run_model(model_name, clf, regr, data_in)
+
+    
