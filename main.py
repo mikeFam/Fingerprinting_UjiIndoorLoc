@@ -2,7 +2,8 @@
 from scripts.utils import (load_data, filter_out_low_WAPS, create_subreport, save_report)
 from scripts.errors_calc import (compute_errors)
 # from scripts.plots import plot_pos_vs_time, plot_lat_vs_lon
-from scripts.models import (load_KNN, load_Random_Forest, load_Linear_Regression, threshold_variance, pca)
+from scripts.models import (load_KNN, load_Random_Forest, load_Linear_Regression, load_Least_Angle_Regression, load_Lasso_Least_Angle_Regression,
+                            threshold_variance, pca)
 
 # Libraries
 from time import time
@@ -131,3 +132,14 @@ if __name__ == "__main__":
     data_in = (x_train, x_test, y_train, y_test)
     lr_errors, lr_prediction = run_model(model_name, regr, data_in)
 
+    # Least Angle Regression with Variance Thresholding
+    model_name, regr = load_Least_Angle_Regression()
+    x_train, x_test = pca(x_train_o, x_test_o, perc_of_var=0.95)
+    data_in =  (x_train, x_test, y_train, y_test)
+    knn_errors, knn_prediction = run_model(model_name, regr, data_in)
+
+    # Lasso Least Angle Regression with Variance Thresholding
+    model_name, regr = load_Lasso_Least_Angle_Regression()
+    x_train, x_test = pca(x_train_o, x_test_o, perc_of_var=0.95)
+    data_in =  (x_train, x_test, y_train, y_test)
+    knn_errors, knn_prediction = run_model(model_name, regr, data_in)
