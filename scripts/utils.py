@@ -1,6 +1,3 @@
-
-
-
 # Libraries
 from time import time
 from os.path import exists, join

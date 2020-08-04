@@ -61,7 +61,9 @@ def compute_errors(prediction, truth, building_penalty=BP, floor_penalty=FP):
     coords_error_prob = (coords_error[coords_error < COORDS_PROB].shape[0] / 
                          coords_error.shape[0] * 100)
     
-    errors = (build_missclass, floor_missclass, coords_error, standard_error, 
-              coords_error_prob)
+    errors = (coords_error, standard_error, coords_error_prob)
+
+
+    # print(errors)
                          
     return errors
