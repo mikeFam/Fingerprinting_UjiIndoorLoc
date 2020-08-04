@@ -63,9 +63,9 @@ def run_model(model_name, regr, data):
     totals_report = create_subreport(errors, y_test.shape[0])
     print(totals_report)
     
-    # toc_model = time()
-    # model_timer = toc_model - tic_model
-    # print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
+    toc_model = time()
+    model_timer = toc_model - tic_model
+    print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
     
     # # Create the output txt file of the entire report. Save if boolean permits.
     header = "%s\nModel Timer: %.2f seconds" % (model_name, model_timer)
@@ -113,22 +113,22 @@ if __name__ == "__main__":
     
     ################## INSERT MODEL AND MODEL NAME HERE #######################
     k = 1
-    # # # K-Nearest Neighbors with Variance Thresholding
-    # model_name, clf, regr = load_KNN(k)
-    # x_train, x_test = threshold_variance(x_train_o, x_test_o, thresh=0.00001)
-    # print (x_test.shape)
-    # data_in =  (x_train, x_test, y_train, y_test)
-    # knn_errors, knn_prediction = run_model(model_name, clf, regr, data_in)
+    # K-Nearest Neighbors with Variance Thresholding
+    model_name, clf, regr = load_KNN(k)
+    x_train, x_test = threshold_variance(x_train_o, x_test_o, thresh=0.00001)
+    print (x_test.shape)
+    data_in =  (x_train, x_test, y_train, y_test)
+    knn_errors, knn_prediction = run_model(model_name, regr, data_in)
 
-    # # Random Forest with PCA
-    # model_name, clf, regr= load_Random_Forest()
-    # x_train, x_test = pca(x_train_o, x_test_o, perc_of_var=0.95)
-    # data_in =  (x_train, x_test, y_train, y_test)
-    # rf_errors, rf_prediction = run_model(model_name, clf, regr, data_in)
+    # Random Forest with PCA
+    model_name, clf, regr= load_Random_Forest()
+    x_train, x_test = pca(x_train_o, x_test_o, perc_of_var=0.95)
+    data_in =  (x_train, x_test, y_train, y_test)
+    rf_errors, rf_prediction = run_model(model_name, regr, data_in)
 
     # Linear Regression with PCA
     model_name, clf, regr = load_Linear_Regression()
     x_train, x_test = pca(x_train_o, x_test_o, perc_of_var=0.95)
     data_in = (x_train, x_test, y_train, y_test)
-    lr_errors, lr_prediction = run_model(model_name, clf, regr, data_in)
+    lr_errors, lr_prediction = run_model(model_name, regr, data_in)
 
