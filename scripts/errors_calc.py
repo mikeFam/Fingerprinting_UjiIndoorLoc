@@ -49,14 +49,13 @@ def compute_errors(prediction, truth, building_penalty=BP, floor_penalty=FP):
             
     Returns:    errors           : (tuple) contains all error types
     '''
-    build_missclass = number_missclassified(prediction, truth, "BUILDINGID")
+    # build_missclass = number_missclassified(prediction, truth, "BUILDINGID")
     
-    floor_missclass = number_missclassified(prediction, truth, "FLOOR")
+    # floor_missclass = number_missclassified(prediction, truth, "FLOOR")
     
     coords_error = localizaion_error(prediction, truth)
     
-    standard_error = (building_penalty * build_missclass + floor_penalty *
-                      floor_missclass + sum(coords_error))
+    standard_error = (sum(coords_error))
     
     coords_error_prob = (coords_error[coords_error < COORDS_PROB].shape[0] / 
                          coords_error.shape[0] * 100)
