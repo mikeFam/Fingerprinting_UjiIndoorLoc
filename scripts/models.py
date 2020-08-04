@@ -7,6 +7,8 @@ from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
 from sklearn.decomposition import PCA
 from sklearn.multioutput import MultiOutputRegressor, MultiOutputClassifier
 from sklearn.feature_selection import VarianceThreshold
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import BayesianRidge
 
 
 def load_KNN(k):
@@ -20,10 +22,12 @@ def load_KNN(k):
                        regr : (REgressor) Longitude and Latitude Regressor
     '''
     model_name = "K-Nearest Neighbors"
+    clf = KNeighborsClassifier(n_neighbors=k, algorithm='kd_tree',
+                                leaf_size=50, p=2)
     regr = KNeighborsRegressor(n_neighbors=k, algorithm='kd_tree',
-                                leaf_size=50, p=1)
+                                leaf_size=50, p=2)
     
-    return model_name, regr
+    return model_name, clf, regr
 
 def load_Random_Forest():
     '''
@@ -36,10 +40,45 @@ def load_Random_Forest():
                        regr : (REgressor) Longitude and Latitude Regressor
     '''   
     model_name = "Random Forest Regressor"
+    clf = RandomForestClassifier(n_estimators=100)
     regr = RandomForestRegressor(n_estimators=100)
     
-    return model_name, regr
+    return model_name, clf, regr
 
+def load_Linear_Regression ():
+    '''
+    Load LinearRegression and gives a name for the output files.
+    
+    Parameters : None
+    
+    Returns    : model_name : (str) Name of the model for output file.
+                       clf  : (Classifier) Building and Floor Classifier
+                       regr : (REgressor) Longitude and Latitude Regressor
+    '''
+    model_name = "Linear Regressor"
+    clf = KNeighborsClassifier(n_neighbors=1, algorithm='kd_tree',
+                                leaf_size=50, p=2)
+    regr = LinearRegression()
+
+
+    return model_name, clf, regr
+
+def load_Baysian_Ridge() :
+    '''
+    Load LinearRegression and gives a name for the output files.
+    
+    Parameters : None
+    
+    Returns    : model_name : (str) Name of the model for output file.
+                       clf  : (Classifier) Building and Floor Classifier
+                       regr : (REgressor) Longitude and Latitude Regressor
+    '''
+    model_name = "Bayesian Ridge"
+    clf = KNeighborsClassifier(n_neighbors=1, algorithm='kd_tree',
+                            leaf_size=50, p=2)
+    regr = BayesianRidge()
+
+    return model_name, clf, regr
 
 def threshold_variance(x_train, x_test, thresh):
     '''
