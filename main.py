@@ -49,11 +49,9 @@ def run_model(model_name, clf, regr, data):
               
     # Regressor
     fit = regr.fit(x_train, y_train[QUANTITATIVE_COLUMNS])
-    # print(fit) # test
     prediction = fit.predict(x_test)
     regr_prediction = DataFrame(prediction, columns=QUANTITATIVE_COLUMNS)
     
-    # print(regr_prediction) # test
 
     prediction = concat((clf_prediction, regr_prediction), axis=1)
     
