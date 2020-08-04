@@ -1,5 +1,5 @@
 # Scripts
-from scripts.utils import (load_data, filter_out_low_WAPS)
+from scripts.utils import (load_data, filter_out_low_WAPS, create_subreport, save_report)
 from scripts.errors_calc import (compute_errors)
 # from scripts.plots import plot_pos_vs_time, plot_lat_vs_lon
 from scripts.models import (load_KNN, load_Random_Forest, load_Linear_Regression, threshold_variance, pca)
@@ -25,7 +25,7 @@ PRINT_SUB = False # Trigger to print sub reports or not.
 DISPLAY_PLOTS = False # If true, the 20 figures will be created on screen.
 
 
-def run_model(model_name, clf, regr, data):
+def run_model(model_name, regr, data):
     '''
     This runs the input model (classifier and regressor) against the dataset
     and prints out the error report.
@@ -43,9 +43,9 @@ def run_model(model_name, clf, regr, data):
     x_train, x_test, y_train, y_test = data # Decompose tuple into datasets
 
     # Classifier
-    fit = clf.fit(x_train, y_train[CATEGORICAL_COLUMNS])
-    prediction = fit.predict(x_test)
-    clf_prediction = DataFrame(prediction, columns=CATEGORICAL_COLUMNS)
+    # fit = clf.fit(x_train, y_train[CATEGORICAL_COLUMNS])
+    # prediction = fit.predict(x_test)
+    # clf_prediction = DataFrame(prediction, columns=CATEGORICAL_COLUMNS)
               
     # Regressor
     fit = regr.fit(x_train, y_train[QUANTITATIVE_COLUMNS])
@@ -53,19 +53,19 @@ def run_model(model_name, clf, regr, data):
     regr_prediction = DataFrame(prediction, columns=QUANTITATIVE_COLUMNS)
     
 
-    prediction = concat((clf_prediction, regr_prediction), axis=1)
+    # prediction = concat((clf_prediction, regr_prediction), axis=1)
     
-    errors = compute_errors(prediction, y_test)
+    errors = compute_errors(regr_prediction, y_test)
 
     # # print (errors) # test
     
     # # Compute totals report and print it
-    # totals_report = create_subreport(errors, y_test.shape[0])
-    # print(totals_report)
+    totals_report = create_subreport(errors, y_test.shape[0])
+    print(totals_report)
     
-    toc_model = time()
-    model_timer = toc_model - tic_model
-    print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
+    # toc_model = time()
+    # model_timer = toc_model - tic_model
+    # print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
     
     # # Create the output txt file of the entire report. Save if boolean permits.
     header = "%s\nModel Timer: %.2f seconds" % (model_name, model_timer)
