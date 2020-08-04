@@ -20,12 +20,10 @@ def load_KNN(k):
                        regr : (REgressor) Longitude and Latitude Regressor
     '''
     model_name = "K-Nearest Neighbors"
-    clf = KNeighborsClassifier(n_neighbors=k, algorithm='kd_tree',
-                                leaf_size=50, p=1)
     regr = KNeighborsRegressor(n_neighbors=k, algorithm='kd_tree',
                                 leaf_size=50, p=1)
     
-    return model_name, clf, regr
+    return model_name, regr
 
 def load_Random_Forest():
     '''
@@ -38,10 +36,9 @@ def load_Random_Forest():
                        regr : (REgressor) Longitude and Latitude Regressor
     '''   
     model_name = "Random Forest Regressor"
-    clf = RandomForestClassifier(n_estimators=100)
     regr = RandomForestRegressor(n_estimators=100)
     
-    return model_name, clf, regr
+    return model_name, regr
 
 
 def threshold_variance(x_train, x_test, thresh):

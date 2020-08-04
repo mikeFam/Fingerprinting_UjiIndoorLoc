@@ -98,3 +98,68 @@ def filter_out_low_WAPS(data, labels, num_samples=MIN_WAPS):
     new_labels = delete(labels, drop_rows, axis=0)
         
     return new_data, new_labels
+
+def create_subreport(errors, M, phone_id=None):
+    '''
+    This function takes the set of errors and formats their output into a
+    string so that it can be reported to the console, saved to a text file, or
+    both.
+    
+    Parameters: errors     : (tuple) contains the four types of errors
+                M          : (int) number of row elements in set
+                phone_id   : (int or None) None implies that its a total report
+                
+    Returns:    subreport  : (str)
+    '''
+    coords_err, std_err, coor_pr_err = errors
+    
+    mean_c = mean(coords_err)
+    std_c = std(coords_err)
+    
+    # build_error = build_missclass / M * 100 # Percent Error
+    # floor_error = floor_missclass / M * 100 # Percent Error
+    
+    # if phone_id is not None:
+    #     str1 = "Phone ID: %d" % phone_id
+    # else:
+    str1 = "Totals Output:"
+    str2 = "Mean Coordinate Error: %.2f +/- %.2f meters" % (mean_c, std_c)
+    str3 = "Standard Error: %.2f meters" % std_err
+    # str4 = "Building Percent Error: %.2f%%" % build_error
+    # str5 = "Floor Percent Error: %.2f%%" % floor_error
+    
+    if coor_pr_err != "N/A":
+        str6 = "Prob that Coordinate Error Less than 10m: %.2f%%" %coor_pr_err    
+    else:
+        str6 = ""
+    
+    subreport = '\n'.join([str1, str2, str3, str6])
+    
+    return subreport
+    
+def save_report(model_name, report, report_type):
+    '''
+    This function saves the final report for the model in the
+    output/<model_name>/ directory. If the directory doesn't exist, then it
+    creates it. WARNING: This function will overwrite previous reports that are
+    of the same model name.
+    
+    Parameters: model_name  : (str)
+                report      : (str)
+                report_type : (str) Totals or phone_id
+                
+    Returns:    None
+    '''
+    dir_path = "output"
+    if not exists(dir_path):
+        mkdir(dir_path)
+    
+    dir_path = join(dir_path, model_name)
+    if not exists(dir_path):
+        mkdir(dir_path)
+    
+    file_name = "%s_%s.txt" % (model_name, report_type)
+    file_path = join(dir_path, file_name)
+    with open(file_path, 'w') as text_file:
+        text_file.write(report)
+    text_file.close()

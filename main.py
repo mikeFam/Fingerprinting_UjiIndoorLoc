@@ -1,5 +1,5 @@
 # Scripts
-from scripts.utils import (load_data, filter_out_low_WAPS)
+from scripts.utils import (load_data, filter_out_low_WAPS, create_subreport, save_report)
 from scripts.errors_calc import (compute_errors)
 # from scripts.plots import plot_pos_vs_time, plot_lat_vs_lon
 from scripts.models import (load_KNN, threshold_variance, load_Random_Forest, pca)
@@ -25,7 +25,7 @@ PRINT_SUB = False # Trigger to print sub reports or not.
 DISPLAY_PLOTS = False # If true, the 20 figures will be created on screen.
 
 
-def run_model(model_name, clf, regr, data):
+def run_model(model_name, regr, data):
     '''
     This runs the input model (classifier and regressor) against the dataset
     and prints out the error report.
@@ -43,9 +43,9 @@ def run_model(model_name, clf, regr, data):
     x_train, x_test, y_train, y_test = data # Decompose tuple into datasets
 
     # Classifier
-    fit = clf.fit(x_train, y_train[CATEGORICAL_COLUMNS])
-    prediction = fit.predict(x_test)
-    clf_prediction = DataFrame(prediction, columns=CATEGORICAL_COLUMNS)
+    # fit = clf.fit(x_train, y_train[CATEGORICAL_COLUMNS])
+    # prediction = fit.predict(x_test)
+    # clf_prediction = DataFrame(prediction, columns=CATEGORICAL_COLUMNS)
               
     # Regressor
     fit = regr.fit(x_train, y_train[QUANTITATIVE_COLUMNS])
@@ -55,19 +55,19 @@ def run_model(model_name, clf, regr, data):
     
     # print(regr_prediction) # test
 
-    prediction = concat((clf_prediction, regr_prediction), axis=1)
+    # prediction = concat((clf_prediction, regr_prediction), axis=1)
     
-    errors = compute_errors(prediction, y_test)
+    errors = compute_errors(regr_prediction, y_test)
 
     # # print (errors) # test
     
     # # Compute totals report and print it
-    # totals_report = create_subreport(errors, y_test.shape[0])
-    # print(totals_report)
+    totals_report = create_subreport(errors, y_test.shape[0])
+    print(totals_report)
     
-    toc_model = time()
-    model_timer = toc_model - tic_model
-    print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
+    # toc_model = time()
+    # model_timer = toc_model - tic_model
+    # print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
     
     # # Create the output txt file of the entire report. Save if boolean permits.
     # header = "%s\nModel Timer: %.2f seconds" % (model_name, model_timer)
@@ -116,16 +116,15 @@ if __name__ == "__main__":
     ################## INSERT MODEL AND MODEL NAME HERE #######################
     k = 1
     # # K-Nearest Neighbors with Variance Thresholding
-    model_name, clf, regr = load_KNN(k)
+    model_name, regr = load_KNN(k)
     x_train, x_test = threshold_variance(x_train_o, x_test_o, thresh=0.00001)
-    print (x_test.shape)
+    # print (x_test.shape)
     data_in =  (x_train, x_test, y_train, y_test)
-    knn_errors, knn_prediction = run_model(model_name, clf, regr, data_in)
+    knn_errors, knn_prediction = run_model(model_name, regr, data_in)
 
     # Random Forest with PCA
-    model_name, clf, regr= load_Random_Forest()
+    model_name, regr= load_Random_Forest()
     x_train, x_test = pca(x_train_o, x_test_o, perc_of_var=0.95)
     data_in =  (x_train, x_test, y_train, y_test)
-    rf_errors, rf_prediction = run_model(model_name, clf, regr, data_in)
+    rf_errors, rf_prediction = run_model(model_name, regr, data_in)
 
-    
