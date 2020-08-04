@@ -1,8 +1,8 @@
 # Scripts
 from scripts.utils import (load_data, filter_out_low_WAPS)
-# from scripts.errors import compute_errors
+from scripts.errors_calc import (compute_errors)
 # from scripts.plots import plot_pos_vs_time, plot_lat_vs_lon
-from scripts.models import (load_KNN)
+from scripts.models import (load_KNN, threshold_variance)
 
 # Libraries
 from time import time
@@ -57,7 +57,7 @@ def run_model(model_name, clf, regr, data):
 
     prediction = concat((clf_prediction, regr_prediction), axis=1)
     
-    # errors = compute_errors(prediction, y_test)
+    errors = compute_errors(prediction, y_test)
 
     # # print (errors) # test
     
@@ -65,9 +65,9 @@ def run_model(model_name, clf, regr, data):
     # totals_report = create_subreport(errors, y_test.shape[0])
     # print(totals_report)
     
-    # toc_model = time()
-    # model_timer = toc_model - tic_model
-    # print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
+    toc_model = time()
+    model_timer = toc_model - tic_model
+    print("%s Timer: %.2f seconds\n" % (model_name, model_timer))
     
     # # Create the output txt file of the entire report. Save if boolean permits.
     # header = "%s\nModel Timer: %.2f seconds" % (model_name, model_timer)
@@ -75,7 +75,7 @@ def run_model(model_name, clf, regr, data):
     # if SAVE_REPORT:
     #     save_report(model_name, report, "totals")
     
-    return  # errors, prediction
+    return errors, prediction
 
 
     ################################## MAIN #######################################
@@ -117,7 +117,8 @@ if __name__ == "__main__":
     k = 1
     # # K-Nearest Neighbors with Variance Thresholding
     model_name, clf, regr = load_KNN(k)
-    # x_train, x_test = threshold_variance(x_train_o, x_test_o, thresh=0.00001)
-    # print (x_test.shape)
-    # data_in =  (x_train, x_test, y_train, y_test)
-    # knn_errors, knn_prediction = run_model(model_name, clf, regr, data_in)
+    x_train, x_test = threshold_variance(x_train_o, x_test_o, thresh=0.00001)
+    print (x_test.shape)
+    data_in =  (x_train, x_test, y_train, y_test)
+
+    knn_errors, knn_prediction = run_model(model_name, clf, regr, data_in)
