@@ -27,6 +27,22 @@ def load_KNN(k):
     
     return model_name, clf, regr
 
+def load_Random_Forest():
+    '''
+    Loads Random Forest and gives a name for the output files.
+    
+    Parameters : None
+    
+    Returns    : model_name : (str) Name of the model for output file.
+                       clf  : (Classifier) Building and Floor Classifier
+                       regr : (REgressor) Longitude and Latitude Regressor
+    '''   
+    model_name = "Random Forest Regressor"
+    clf = RandomForestClassifier(n_estimators=100)
+    regr = RandomForestRegressor(n_estimators=100)
+    
+    return model_name, clf, regr
+
 
 def threshold_variance(x_train, x_test, thresh):
     '''
@@ -45,4 +61,19 @@ def threshold_variance(x_train, x_test, thresh):
 
     return x_train, x_test
 
-
+def pca(x_train, x_test, perc_of_var):
+    '''
+    Preforms PCA and keeps perc_of_var percent of variance 
+    
+    Parameters : x_train      : (DataFrame) Training Dataset
+                 x_test       : (DataFrame) Test Dataset
+                 perc_of_var  : (float) percent of variance from PCA
+    
+    Returns    : x_train      : (DataFrame) Training Dataset
+                 x_test       : (DataFrame) Test Dataset
+    '''   
+    dim_red = PCA(n_components=perc_of_var, svd_solver='full')
+    x_train = dim_red.fit_transform(x_train)
+    x_test = dim_red.transform(x_test)
+    
+    return x_train, x_test
