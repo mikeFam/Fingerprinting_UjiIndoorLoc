@@ -60,8 +60,8 @@ def run_model(model_name, regr, data):
     errors = compute_errors(regr_prediction, y_test)
     r2 = r2_score(y_test[QUANTITATIVE_COLUMNS], regr_prediction)
     mean = mean_squared_error(y_test[QUANTITATIVE_COLUMNS], regr_prediction)
-    print("%.3f\n" % (r2))
-    print("%.3f\n" % (mean))
+    print("R2 score: %.4f\n" % (r2))
+    print("Mean square error: %.4f\n" % (mean))
 
     # # print (errors) # test
     
@@ -101,18 +101,15 @@ if __name__ == "__main__":
     # subset of the train set here.
     x_train_o, x_test_o, y_train, y_test = train_test_split(X.values, Y.values, 
                                              test_size=0.2, random_state=0)
-    # print (x_train_o)
-    # print (y_train)
 
     # This filters out samples that do not have enough active WAPs in it 
     # according to MIN_WAPS. This has to happen after the split because if not,
     # the randomness will be affected by missing samples, thus compromising 
     # test set validity.
     
-    # print(x_test_o.shape)
     x_train_o, y_train = filter_out_low_WAPS(x_train_o, y_train, MIN_WAPS)
     x_test_o, y_test = filter_out_low_WAPS(x_test_o, y_test, MIN_WAPS)
-    # print(x_test_o.shape)
+
 
     y_train = DataFrame(y_train, columns=Y.columns)
     y_test = DataFrame(y_test, columns=Y.columns)
@@ -148,6 +145,6 @@ if __name__ == "__main__":
     x_train, x_test = pca(x_train_o, x_test_o, perc_of_var=0.95)
     data_in =  (x_train, x_test, y_train, y_test)
     knn_errors, knn_prediction = run_model(model_name, regr, data_in)
-    
+
     toc = time() # Report program performance timer
     print("Program Timer: %.2f seconds" % (toc-tic))
