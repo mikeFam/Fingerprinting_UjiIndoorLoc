@@ -60,8 +60,8 @@ def run_model(model_name, regr, data):
     errors = compute_errors(regr_prediction, y_test)
     r2 = r2_score(y_test[QUANTITATIVE_COLUMNS], regr_prediction)
     mean = mean_squared_error(y_test[QUANTITATIVE_COLUMNS], regr_prediction)
-    print("R2 score: %.4f\n" % (r2))
-    print("Mean square error: %.4f\n" % (mean))
+    print("\nR squared score: %.3f\n" % (r2))
+    print("Mean squared error: %.3f\n" % (mean))
 
     # # print (errors) # test
     
